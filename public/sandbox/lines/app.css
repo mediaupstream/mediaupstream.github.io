@@ -1,0 +1,50 @@
+html,
+body {
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1rem;
+  font-size: 16px;
+}
+
+#defaultCanvas {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#ocean {
+  background: #11210b;
+  background: #eee;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+#ui,
+#ui li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#ui {
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+#ui:hover li {
+  opacity: 0.8;
+}
+#ui li {
+  display: inline-block;
+  color: #000;
+  opacity: 0.3;
+  padding: 0 5px;
+  border-right: 1px dotted #999;
+  font-size: 0.8em;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  transition: opacity 0.2s linear;
+}

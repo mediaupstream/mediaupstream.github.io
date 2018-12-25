@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>Sphere Message - Encode / Decode spherical messages</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.min.js"></script>
+    <script src="bubbles.js"></script>
+    <script src="sphere.js"></script>
+    <link rel="stylesheet" href="sphere.css" />
+  </head>
+  <body>
+    <div id="ocean"></div>
+
+    <h1>sphere message</h1>
+
+    <a
+      href="https://github.com/mediaupstream/Sphere"
+      class="gist"
+      target="_blank"
+      >Source Code</a
+    >
+
+    <div class="content">
+      <br />
+
+      <blockquote id="radial">
+        <pre><code>
+------------32--04--13--13--21--09--22
+                                     |
+16--30--18--37--10--26--04--21--13  18
+|                                |   |
+06  08--04--16--37--21--16--30  30  21
+|   |                        |   |   |
+18  30  06--16--30--18--37  08  29  16
+|   |   |                |   |   |   |
+08  16  18  32--26--25  10  13  26  30
+|   |   |   |        |   |   |   |   |
+21  21  08  03  00  25  26  10  03  08
+|   |   |   |   |    |   |   |   |   |
+32  18  21  26  03--21  04  26  32  04
+|   |   |   |            |   |   |   |
+29  22  32  29--30--13--21  04  26  16
+|   |   |                    |   |   |
+03  03  29--03--30--05--18--22  25  37
+|   |                            |   |
+30  30--13--13--04--32--03--21--25  21
+|                                    |
+05--18--22--04--26--10--13--08--30--16
+</code></pre>
+      </blockquote>
+
+      <blockquote>
+        At that moment, there was a buzz as one of the monitors<br />
+        turned itself on. As they watched, the screen rapidly filled<br />
+        with numbers:
+        <pre><code>
+00032125252632 032629 301321 04261037 18 3016 
+0618082132 29033005 1822 04261013 0830162137 
+1604 08301621 1822 092113130432
+</code></pre>
+        <br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"Well, obviously, it goes three, twenty-one,
+        twenty-five,<br />
+        twenty-five. . . ."<br /><br />
+        Norman didn't understand. "But how do you know that?"<br /><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"Look," Harry said impatiently. "It's very
+        simple, Norman.<br />
+        It's a spiral, reading from inside to outside. It's just<br />
+        giving us the numbers in--"<br /><br />
+        Abruptly, the screen changed again.
+      </blockquote>
+      <div style="clear:both; zoom:1; display:block; height:1px;"></div>
+      <br /><br />
+      <br /><br />
+
+      <div class="container x">
+        <label for="encode">Encoded Message:</label>
+        <textarea id="encode"></textarea>
+      </div>
+
+      <div class="container">
+        <label for="decode">Decoded Message:</label>
+        <textarea id="decode"></textarea>
+      </div>
+    </div>
+  </body>
+</html>
