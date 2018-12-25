@@ -16,10 +16,10 @@ const style = {
     background: "#a1c49c"
   },
   block: {
-    background: "#58395d"
+    background: "#46b18d"
   },
   c: {
-    color: "#58395d",
+    color: "#46b18d",
     fontWeight: "bold",
     fontFfamily: "-apple-system, BlinkMacSystemFont, sans-serif",
     textTransform: "uppercase",
@@ -30,7 +30,7 @@ const style = {
     display: "inline-block"
   },
   flip: {
-    background: "#58395d",
+    background: "#46b18d",
     color: "#a1c49c"
   }
 };
