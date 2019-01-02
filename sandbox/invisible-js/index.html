@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>invisible.js</title>
+    <link
+      href="http://fonts.googleapis.com/css?family=Codystar"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/invisible.js"></script>
+    <script>
+      var inv = new Invisible();
+
+      function unitify(n) {
+        var units = [1000, "k", "m", "g", "t", "p", "e", "z", "y"];
+        for (var i = units.length; i >= 1; i--) {
+          var unit = Math.pow(units[0], i);
+          if (n >= unit) return Math.floor(n / unit) + units[i] + "b";
+        }
+        return n + " bytes";
+      }
+
+      $(function() {
+        $(".js-crypt").click(function(e) {
+          e.preventDefault();
+          var type = $(this).attr("data-type");
+          var ta = $(".ta");
+          var result = inv[type](ta.val());
+          ta.val(result);
+          ta.removeClass("hidden");
+          if (type == "encode") ta.addClass("hidden");
+          $(".js-len").text(unitify($(".ta").val().length));
+          ta.select();
+        });
+
+        $(".char").change(function(e) {
+          var v = $(this).val();
+          var type = $(this).attr("data-char");
+          // set defaults
+          if (v == "" && type == "char1") v = " ";
+          if (v == "" && type == "char2") v = "\t";
+          if (v == "" && type == "end") v = "\n";
+          // inv[type] = v;
+          inv.set(type, v);
+        });
+
+        $(".ta").keyup(function(e) {
+          $(".js-len").text(unitify($(".ta").val().length));
+        });
+
+        // $('h1').click(function(){
+        //   $('body').toggleClass('mini');
+        // })
+
+        $("#crafted")
+          .mouseover(function(e) {
+            $(this).addClass("bg-anim");
+          })
+          .mouseout(function() {
+            $(this).removeClass("bg-anim");
+          });
+
+        $(".read-manifesto").click(function(e) {
+          e.preventDefault();
+          $.get("old_pond.haiku", function(data) {
+            $(".ta")
+              .val(data)
+              .trigger("keyup");
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <a href="http://mediaupstream.com" id="crafted" class=""
+        >Created by <em>Media Upstream</em></a
+      >
+      <h1>invisible.js</h1>
+      <br />
+      <p class="description">
+        <strong>Invisible.JS is a text to binary conversion tool...</strong>
+        but, you can change the values for 1 and 0 to whatever you want. For
+        example, if you make 1 a <code>SPACE</code> character and 0 a
+        <code>TAB</code> character you can then encode your message and the
+        result will be <em>invisible!</em>
+      </p>
+
+      <p>
+        Try it out on this
+        <a href="#insert-manifesto" title="Insert Haiku" class="read-manifesto">
+          Haiku </a
+        >!
+      </p>
+
+      <div class="controls">
+        <a href="#" id="js-hide" data-type="encode" class="btn js-crypt"
+          >ENCODE</a
+        >
+        <a href="#" id="js-show" data-type="decode" class="btn js-crypt"
+          >DECODE</a
+        >
+        <span title="Character 1: Default is SPACE" class="tip bx"
+          >1 &#8644; </span
+        ><input
+          type="text"
+          class="char"
+          data-char="char1"
+          val=" "
+          placeholder="space"
+        />
+        <span title="Character 2: Default is TAB" class="tip bx"
+          >0 &#8644; </span
+        ><input
+          type="text"
+          class="char"
+          data-char="char2"
+          val="\t"
+          placeholder="tab"
+        />
+        <!-- <span title="End Character: Default is NEWLINE" class="tip bx">END</span><input type="text" class="char" data-char="end" val="\n" placeholder="\n"> -->
+      </div>
+
+      <div class="wrap1">
+        <!-- <pre class="ta" contenteditable="true"></pre> -->
+        <textarea class="ta" val=""></textarea>
+        <span class="js-len bx">0 bytes</span>
+      </div>
+
+      <p class="footnotes">
+        <span style="float:right"
+          ><a
+            href="https://twitter.com/share"
+            class="twitter-share-button"
+            data-url="http://mediaupstream.com/sandbox/invisible-js/"
+            data-text="Invisible.js - Make Stuff Invisible™"
+            data-hashtags="jquery,secret,encoding"
+            >Tweet</a
+          >
+          <script>
+            !(function(d, s, id) {
+              var js,
+                fjs = d.getElementsByTagName(s)[0];
+              if (!d.getElementById(id)) {
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+              }
+            })(document, "script", "twitter-wjs");
+          </script></span
+        >
+        <a href="https://github.com/mediaupstream/invisible-js" class="gh"
+          >Source on GitHub</a
+        >
+      </p>
+    </div>
+
+    <div class="bm"></div>
+  </body>
+</html>
