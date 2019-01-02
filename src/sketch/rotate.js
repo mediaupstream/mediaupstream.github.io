@@ -1,8 +1,28 @@
-const isMobile = s => s < 630;
-const jitter = () => Math.floor((Math.random() * 255) % 255) - 50;
+// const isMobile = s => s < 630;
+// const jitter = () => Math.floor((Math.random() * 255) % 255) - 50;
+const getShape = () => {
+  let shape;
+  let i = Math.floor(Math.random() * 4);
+  switch (i) {
+    case 1:
+      shape = "box";
+      break;
+    case 2:
+      shape = "sphere";
+      break;
+    case 3:
+      shape = "torus";
+      break;
+    default:
+      shape = "plane";
+  }
+  return shape;
+};
 
 export default function sketch(p) {
-  let rotation = 0;
+  let shape = "plane";
+  let seed = Math.random() * 100 - 50;
+  let rotation = seed;
   let tick = 0;
   let thick = 0;
   let delta = 1;
@@ -11,7 +31,8 @@ export default function sketch(p) {
 
   p.setup = () => {
     // pause = isMobile(p.windowWidth) ? true : false;
-    p.createCanvas(p.windowWidth / 4, p.windowHeight / 4, p.WEBGL);
+    p.createCanvas(p.windowWidth / 4, p.windowHeight / 2, p.WEBGL);
+    shape = getShape();
   };
 
   // p.windowResized = () => {
@@ -29,6 +50,14 @@ export default function sketch(p) {
   p.draw = function() {
     if (pause) return;
 
+    if (delta > 4000) {
+      delta = 0;
+      let oldShape = `${shape}`;
+      while (shape === oldShape) {
+        shape = getShape();
+      }
+    }
+
     delta++;
     if (tick >= 255) {
       up = false;
@@ -44,16 +73,15 @@ export default function sketch(p) {
       tick--;
     }
 
-    // p.colorMode(p.RGB);
-    // p.background('rgba(243, 241, 236, 60)')
-    // p.colorMode(p.HSB);
     p.noFill();
     p.stroke(p.color(tick, tick / 2, delta / 3, 140));
     p.strokeWeight(thick++);
     p.push();
     p.rotateY((rotation += 0.00001));
     p.rotateX((rotation += 0.001));
-    p.box(0 + delta / 4);
+    p.rotateZ((rotation += 0.002));
+    // p.box(seed + delta / 4);
+    p[shape](seed + delta / 4);
     p.pop();
   };
 }

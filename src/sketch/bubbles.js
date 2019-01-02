@@ -1,4 +1,4 @@
-let maxSize = 100;
+let maxSize = 50;
 let Bubble = function(x, y, p) {
   x = x || p.random(p.windowWidth / 2);
   y = y || p.random(p.windowHeight / 4, p.windowHeight + maxSize * 2);
@@ -49,12 +49,12 @@ export default function sketch(p) {
     // }
   };
 
-  p.windowResized = () => {
-    p.resizeCanvas(p.windowWidth / 2, p.windowHeight);
-  };
+  // p.windowResized = () => {
+  //   p.resizeCanvas(p.windowWidth / 2, p.windowHeight);
+  // };
 
   p.setup = () => {
-    p.createCanvas(p.windowWidth / 2, p.windowHeight);
+    p.createCanvas(p.windowWidth / 4, p.windowHeight / 2);
     p.frameRate(15);
     // create bubbles
     for (let i = 0; i < numBubbles; i++) {
@@ -97,7 +97,7 @@ export default function sketch(p) {
       }
 
       // x axis jitter
-      if (wind == 0 || wind == 2) {
+      if (wind === 0 || wind === 2) {
         if (p.random(50) > 45) b.x -= b.speed;
         if (p.random(50) > 45) b.x += b.speed;
       } else {
@@ -106,7 +106,7 @@ export default function sketch(p) {
         if (p.random(50) > 45) b.y += b.speed;
       }
 
-      if (tick % 40 == 0) {
+      if (tick % 40 === 0) {
         b.color = p.color(
           p.random(255),
           p.random(255),
@@ -143,10 +143,11 @@ export default function sketch(p) {
   p.draw = () => {
     // p.blendMode(blends[blend_index]);
     tick++;
-    if (tick % 100 == 0) {
+    if (tick % 100 === 0) {
       wind = cycle(wind, 4);
     }
-    p.clear();
+    // p.clear();
+    p.background("#C8D3D5");
     drawBubbles(bubbles, true);
     drawBubbles(splash, false);
   };

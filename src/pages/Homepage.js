@@ -1,17 +1,14 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {
-  Flex,
-  Box,
-  Card,
-  Link as L,
-  mage,
-  Heading as H,
-  Text as T
-} from "rebass";
+import { Flex, Box, Link as L, Heading as H, Text as T } from "rebass";
 import P5Wrapper from "react-p5-wrapper";
-// import sketch from '../sketch/rotate'
-import sketch from "../sketch/bubbles";
+import s1 from "../sketch/rotate";
+import s2 from "../sketch/bubbles";
+import s3 from "../sketch/lines";
+
+const sketch = [s1, s2, s3];
+const randomSketch = sketch => Math.floor(Math.random() * sketch.length) || 0;
+const sketchList = ["expand", "bubbles", "lines"];
 
 const social = [
   {
@@ -25,10 +22,6 @@ const social = [
   {
     name: "twitter",
     url: "https://twitter.com/derekanderson"
-  },
-  {
-    name: "email",
-    url: "mailto:derek@mediaupstream.com"
   },
   {
     name: "linkedin",
@@ -52,10 +45,6 @@ const projects = [
   {
     name: "Game Grid",
     url: "http://northern.lights.mn/projects/game-grid-working/"
-  },
-  {
-    name: "Lines",
-    url: "/sandbox/lines"
   },
   {
     name: "Cube Draw",
@@ -121,20 +110,11 @@ const Link = styled(p => <L color="#CF4D6F" {...p} />)`
   display: inline-block;
   &:hover {
     color: #000;
-    transform: scale(1.1) skewX(-8deg);
+    transform: scale(1.1) skewX(0deg);
   }
 `;
-const Text = props => (
-  <T textAlign={["center", "left"]} color="#76818E" {...props} />
-);
-const Heading = props => (
-  <H
-    color="#76818E"
-    textAlign={["center", "left"]}
-    fontWeight={400}
-    {...props}
-  />
-);
+const Text = props => <T fontWeight={300} color="#76818E" {...props} />;
+const Heading = props => <H color="#A36D90" fontWeight={400} {...props} />;
 const Content = props => (
   <Box
     p={[4, 4, 5]}
@@ -145,9 +125,10 @@ const Content = props => (
 );
 
 const Homepage = () => {
+  const [selectedSketch, setSketch] = useState(randomSketch(sketch));
   return (
     <Flex flexWrap="wrap">
-      <P5Wrapper sketch={sketch} rotation={45} />
+      <P5Wrapper sketch={sketch[selectedSketch]} rotation={45} />
 
       <Content width={[1, 1, 1 / 2]} ml={[0, "50vw"]}>
         {/* <SocialLinks /> */}
@@ -165,16 +146,16 @@ const Homepage = () => {
           and organic avocados.
         </Text>
 
-        <Text py={2} fontSize={3}>
+        <Text py={3} fontSize={3}>
           Sometimes I teach creative coding, give tech talks, and volunteer at
-          local art & tech events.
+          art & tech events.
         </Text>
 
         {/* <Divider /> */}
 
         <Section bg="#fff">
           <Text fontWeight={200} mb={2} fontSize={4}>
-            Currently:
+            Current:
           </Text>
           <Text color="#A36D90" fontSize={4}>
             Sr Engineer @ Target.com
@@ -185,27 +166,43 @@ const Homepage = () => {
           <Text fontWeight={200} fontSize={4} mb={2}>
             Previous:
           </Text>
-          <Text fontSize={3} mb={2}>
-            FrontendMasters, Jingit, Invisible Friend, VoiceHive, Vitro, Creed
-            Interactive, &nbsp;
-            <Link
-              href="https://www.linkedin.com/in/derekanderson523"
-              target="_blank"
-            >
-              {" "}
-              more...{" "}
-            </Link>
-          </Text>
+          <Flex flexWrap="wrap">
+            {[
+              "Frontend Masters",
+              "Invisible Friend",
+              "Jingit",
+              "Voice Hive",
+              "Creed"
+            ].map(item => (
+              <Box
+                key={item}
+                width={[1 / 2, 1 / 2, 1 / 3]}
+                py={2}
+                color="#666"
+                children={item}
+              />
+            ))}
+            <Box width={[1 / 2, 1 / 2, 1 / 3]} py={2}>
+              <Link
+                href="https://www.linkedin.com/in/derekanderson523"
+                target="_blank"
+                children="more..."
+              />
+            </Box>
+          </Flex>
         </Section>
 
-        {/* <Section style={{background:'linear-gradient(0deg, #CF4D6F 0%, #A36D90 100%)'}}> */}
         <Section bg="#A36D90">
-          <Text fontWeight={200} fontSize={4} mb={2} color="#fff">
-            Projects:
-          </Text>
+          <Text
+            fontWeight={200}
+            fontSize={4}
+            mb={2}
+            color="#fff"
+            children="Projects:"
+          />
           <Flex flexWrap="wrap">
             {projects.map(item => (
-              <Box key={item.url} width={1 / 3}>
+              <Box key={item.url} width={[1 / 2, 1 / 2, 1 / 3]}>
                 <Link
                   target="_blank"
                   href={item.url}
@@ -214,6 +211,34 @@ const Homepage = () => {
                   style={{ display: "block" }}
                 >
                   {item.name}
+                </Link>
+              </Box>
+            ))}
+          </Flex>
+        </Section>
+
+        <Section style={{ display: "none" }}>
+          <Text
+            fontWeight={200}
+            fontSize={3}
+            mb={3}
+            color="#fff"
+            children="Change Visualization:"
+          />
+          <Flex flexWrap="wrap">
+            {sketchList.map((item, i) => (
+              <Box key={item} width={[1 / 2, 1 / 3]}>
+                <Link
+                  py={2}
+                  color="#fff"
+                  style={{
+                    cursor: "pointer",
+                    display: "block"
+                  }}
+                  onClick={() => setSketch(i)}
+                >
+                  {selectedSketch === i ? "◙  " : ""}
+                  {item}
                 </Link>
               </Box>
             ))}
