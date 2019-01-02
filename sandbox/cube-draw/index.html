@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, width=device-width, initial-scale=1.0"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Cube Draw - Media Upstream</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        background-color: #f3f1ec;
+      }
+      #aboutCanvas {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      #defaultCanvas {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.min.js"></script>
+    <script>
+      function doubleTap(d, h, e) {
+        if ("ontouchstart" in d) {
+          var h = Math.abs(+h) || 500,
+            e = Math.abs(+e) || 40,
+            i,
+            f,
+            g,
+            j = function() {
+              i = 0;
+              g = f = NaN;
+            };
+          j();
+          d.addEventListener(
+            "touchstart",
+            function(b) {
+              var a = b.changedTouches[0] || {},
+                c = f,
+                k = g;
+              i++;
+              f = +a.pageX || +a.clientX || +a.screenX;
+              g = +a.pageY || +a.clientY || +a.screenY;
+              Math.abs(c - f) < e &&
+                Math.abs(k - g) < e &&
+                ((c = document.createEvent("MouseEvents")),
+                c.initMouseEvent &&
+                  c.initMouseEvent(
+                    "dblclick",
+                    !0,
+                    !0,
+                    b.view,
+                    i,
+                    a.screenX,
+                    a.screenY,
+                    a.clientX,
+                    a.clientY,
+                    b.ctrlKey,
+                    b.altKey,
+                    b.shiftKey,
+                    b.metaKey,
+                    b.button,
+                    a.target
+                  ),
+                d.dispatchEvent(c));
+              setTimeout(j, h);
+            },
+            !1
+          );
+          d.addEventListener(
+            "touchmove",
+            function() {
+              j();
+            },
+            !1
+          );
+        }
+      }
+
+      // - p5js events
+      function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+      }
+
+      function mouseMoved() {
+        delta++;
+      }
+
+      function touchStarted() {
+        ptouchX = touchX;
+        ptouchY = touchY;
+        return false;
+      }
+
+      function touchEnded() {}
+
+      function mouseClicked() {
+        clear();
+        colorMode(RGB, 255);
+        background(color(random(220), random(220), random(220)));
+        colorMode(HSB, 360, 100, 100, 1);
+        _same = false;
+        if (random(20) > 15) _same = true;
+      }
+
+      //  -----------------------
+
+      var _hue = 0;
+      var _fill = false;
+      var delta = 0;
+      var pdelta = 0;
+      var _lightness = 100;
+      var _dir = 1;
+      var _same = false;
+
+      function setup() {
+        var canvas = createCanvas(windowWidth, windowHeight);
+        canvas.parent("aboutCanvas");
+        background(color(random(220), random(220), random(220)));
+        colorMode(HSB, 360, 100, 100, 1);
+
+        // enable double tapping (optionally specifying max speed & distance)
+        var canvasDom = canvas.canvas;
+        doubleTap(canvasDom);
+
+        // use the same as dblclick on desktop
+        canvasDom.addEventListener(
+          "dblclick",
+          function(e) {
+            mouseClicked();
+          },
+          false
+        );
+      }
+
+      function draw() {
+        // get the x/y values of our mouse/previous mouse
+        var mX = mouseX;
+        var pmX = pmouseX;
+        var mY = mouseY;
+        var pmY = pmouseY;
+
+        // if we are touching (mobile user?) set the mx/pmx values from the touch
+        if (touchIsDown) {
+          mX = touchX;
+          pmX = ptouchX;
+          mY = touchY;
+          pmY = ptouchY;
+          pdelta = -100;
+
+          // draw "Clear" box
+        }
+
+        // only draw if we're moving around
+        if (delta == pdelta) return;
+        pdelta = delta;
+
+        if (_lightness == 0) _dir = 1;
+        if (_lightness == 100) _dir = -1;
+        _lightness += _dir;
+
+        // cycle through the rainbow
+        _hue++;
+        var c = color(_hue, 50, _lightness, 1);
+
+        // start paint
+
+        // normalize pmouseX/Y
+        if (pmX == 0) pmX = mX;
+        if (pmY == 0) pmY = mY;
+
+        var xT = abs(mX - pmX);
+        var yT = abs(mY - pmY);
+        var thickness = max(xT, yT);
+        thickness = max(1, thickness / 4);
+
+        var c2 = color(_hue, _lightness, 100, 1);
+        // sometimes we want the painty lines to be the same as the cube lines
+        if (_same) c2 = c;
+        stroke(c2);
+        strokeWeight(thickness);
+        // noStroke();
+        // ellipse(-5, -5, 10, 10);
+        line(mX, mY, pmX, pmY);
+
+        // move the origin to our mouse coords
+        translate(mX, mY);
+
+        // mangle the matrix
+        shearX(random(360));
+        shearY(random(360));
+        rotate(random(360));
+
+        _fill = random(50) > 47 ? true : false;
+
+        // filled
+        if (_fill) {
+          fill(c);
+          noStroke();
+        } else {
+          // outlines
+          noFill();
+          stroke(c);
+          strokeWeight(random(0.1, 2));
+        }
+        // draw the thing
+        // ellipse(random(-100,100), random(-100,100), random(50, 100), random(50, 100));
+        rect(
+          random(-100, 100),
+          random(-100, 100),
+          random(50, 100),
+          random(50, 100)
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <div id="aboutCanvas"></div>
+  </body>
+</html>
