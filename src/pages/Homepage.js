@@ -157,13 +157,23 @@ const Background = styled(Box)`
   background-size: cover;
 `;
 
+const NUM_BG = 8;
+
 const Homepage = () => {
-  const bg = Math.round(Math.random() * 8) || 1;
+  const [bg, setBg] = React.useState(Math.round(Math.random() * NUM_BG) || 1);
+  const changeBg = () => {
+    setBg(n => (n < NUM_BG ? n + 1 : 1));
+  };
   const bgImage = `/img/bg/${bg}.jpeg`;
 
   return (
     <Flex flexWrap="wrap" style={{ height: "100vh" }}>
-      <Background width={[1, 1, 4 / 9]} {...{ bgImage }} py={7} />
+      <Background
+        width={[1, 1, 4 / 9]}
+        {...{ bgImage }}
+        py={7}
+        onClick={changeBg}
+      />
       <Content px={[4, 4, 5]} width={[1, 1, 5 / 9]}>
         <Section bg="#fff" py={["2rem", "5rem"]}>
           <Flex alignItems="top" flexDirection={["column", "row"]}>
