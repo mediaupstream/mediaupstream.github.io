@@ -169,6 +169,7 @@ const Homepage = () => {
           <Flex alignItems="top" flexDirection={["column", "row"]}>
             <Box pr="3.5rem">
               <img
+                alt="profile avatar"
                 src="/img/profile.jpg"
                 style={{ width: 100, borderRadius: 600, marginBottom: "2rem" }}
               />
@@ -193,7 +194,7 @@ const Homepage = () => {
               <Text fontWeight={200} mb={2} fontSize={4}>
                 Current:
               </Text>
-              <Text color={theme.primary} fontSize={4} mb={5}>
+              <Text color={theme.primary} fontSize={4} mb={2}>
                 Media Upstream
               </Text>
             </Box>
