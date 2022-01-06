@@ -180,8 +180,9 @@ const Homepage = () => {
               </Text>
               <Text py={2} fontSize={2} lineHeight={1.2}>
                 For over a decade my work has contributed to the success of
-                companies of varing size; everything from seed startups to
-                fortune 50 companies.
+                companies ranging in size from seed startups to fortune 50. I
+                love building products, working with agile teams, and delivering
+                high quality user experiences
               </Text>
               <Text py={2} fontSize={2} lineHeight={1.2}>
                 When i'm not working you can find me creating digital art,
