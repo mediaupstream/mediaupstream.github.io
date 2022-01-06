@@ -38,6 +38,10 @@ const projects = [
     url: "/emoji-encode"
   },
   {
+    name: "Lines",
+    url: "/sandbox/lines"
+  },
+  {
     name: "Love Growth Cash",
     url: "/love-growth-cash"
   },
@@ -52,6 +56,10 @@ const projects = [
   {
     name: "Cube Draw",
     url: "/sandbox/cube-draw/"
+  },
+  {
+    name: "Paint Spread",
+    url: "/sandbox/paint-spread"
   },
   {
     name: "Tic Tac Toe",
@@ -228,7 +236,7 @@ const Homepage = () => {
             fontSize={4}
             mb={2}
             color="#fff"
-            children="Projects:"
+            children="Experiments:"
           />
           <Flex flexWrap="wrap">
             {projects.map(item => (
