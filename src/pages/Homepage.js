@@ -179,13 +179,13 @@ const Homepage = () => {
               <Text py={2} fontSize={4}>
                 I create interfaces, applications, and art on the web
               </Text>
-              <Text py={2} fontSize={2} lineHeight={1.2}>
+              <Text py={2} fontSize={2} lineHeight={1.4}>
                 For over a decade my work has contributed to the success of
                 companies ranging in size from seed startups to fortune 50. I
                 love building products, working with agile teams, and delivering
                 high quality user experiences
               </Text>
-              <Text py={2} fontSize={2} lineHeight={1.2}>
+              <Text py={2} fontSize={2} lineHeight={1.4}>
                 When i'm not working you can find me creating digital art,
                 hiking, traveling, and spending time with my family
               </Text>
