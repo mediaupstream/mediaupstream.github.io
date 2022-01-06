@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Flex, Box, Link as L, Heading as H, Text as T } from "rebass";
-import P5Wrapper from "react-p5-wrapper";
+
+import { Image, Flex, Box, Link as L, Heading as H, Text as T } from "rebass";
 import s1 from "../sketch/rotate";
 import s2 from "../sketch/bubbles";
 import s3 from "../sketch/lines";
@@ -10,18 +10,21 @@ const sketch = [s1, s2, s3];
 const randomSketch = sketch => Math.floor(Math.random() * sketch.length) || 0;
 const sketchList = ["expand", "bubbles", "lines"];
 
+const theme = {
+  primary: "#c04b6a",
+  secondary: "#e7e8ea",
+  text: "#76818E",
+  bg: "#fff"
+};
+
 const social = [
   {
     name: "instagram",
-    url: "https://www.instagram.com/a.mi.no/"
+    url: "https://www.instagram.com/am.id.a/"
   },
   {
     name: "github",
     url: "https://github.com/mediaupstream"
-  },
-  {
-    name: "twitter",
-    url: "https://twitter.com/derekanderson"
   },
   {
     name: "linkedin",
@@ -53,30 +56,15 @@ const projects = [
   {
     name: "Tic Tac Toe",
     url: "/ttt-react-animated"
-  },
-  {
-    name: "Dead Drop",
-    url: "http://dead-drop.io"
-  },
-  {
-    name: "React Timber",
-    url: "https://github.com/mediaupstream/react-timber"
   }
 ];
 
 const Section = props => (
-  <Box
-    px={[4, 4, 5]}
-    py={[3, 4]}
-    mx={[-4, -4, -5]}
-    my={0}
-    bg="#CF4D6F"
-    {...props}
-  />
+  <Box px={[4, 4, 5]} py={[3, 4]} mx={[-4, -4, -5]} my={0} {...props} />
 );
 
 const SocialLinks = props => (
-  <Section bg="#76818E">
+  <Section>
     <Text textAlign="center" fontSize={2}>
       {social.map(item => (
         <Link
@@ -96,13 +84,16 @@ const SocialLinks = props => (
 
 const Divider = styled(Box).attrs({
   as: "hr",
-  bg: "#c5a9bf",
   my: 3
 })`
-  border: 0;
+  box-sizing: border-box;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border-top: 8px dotted rgb(197, 169, 191);
   height: 2px;
   opacity: 0.3;
 `;
+
 const Link = styled(p => <L color="#CF4D6F" {...p} />)`
   border: none;
   text-decoration: none;
@@ -113,66 +104,105 @@ const Link = styled(p => <L color="#CF4D6F" {...p} />)`
     transform: scale(1.1) skewX(0deg);
   }
 `;
-const Text = props => <T fontWeight={300} color="#76818E" {...props} />;
-const Heading = props => <H color="#A36D90" fontWeight={400} {...props} />;
-const Content = props => (
-  <Box
-    p={[4, 4, 5]}
-    style={{ paddingBottom: 0, zIndex: 100 }}
-    bg="#fff"
-    {...props}
-  />
+const Text = props => <T fontWeight={300} color={theme.text} {...props} />;
+const Heading = props => (
+  <H color={theme.primary} fontWeight={400} {...props} />
 );
 
+const Content = styled(Box)`
+  transform-style: preserve-3d;
+  z-index: 100;
+
+  position: relative;
+  background: #cf4d6f;
+  padding-bottom: 0;
+  box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.4);
+
+  & > * {
+    z-index: 200;
+    transform: translateZ(1px);
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: repeating-radial-gradient(
+      circle at 100%,
+      #333,
+      #333 10px,
+      #eee 0,
+      #eee 20px
+    );
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 1;
+  }
+`;
+
+const Background = styled(Box)`
+  z-index: 100;
+  background: ${p => `url(${p.bgImage})`};
+  background-size: cover;
+`;
+
 const Homepage = () => {
-  const [selectedSketch, setSketch] = useState(randomSketch(sketch));
+  const bg = Math.round(Math.random() * 8) || 1;
+  const bgImage = `/img/bg/${bg}.jpeg`;
+
   return (
-    <Flex flexWrap="wrap">
-      <P5Wrapper sketch={sketch[selectedSketch]} rotation={45} />
+    <Flex flexWrap="wrap" style={{ height: "100vh" }}>
+      <Background width={[1, 1, 4 / 9]} {...{ bgImage }} py={7} />
+      <Content px={[4, 4, 5]} width={[1, 1, 5 / 9]}>
+        <Section bg="#fff" py={["2rem", "5rem"]}>
+          <Flex alignItems="top" flexDirection={["column", "row"]}>
+            <Box pr="3.5rem">
+              <img
+                src="/img/profile.jpg"
+                style={{ width: 100, borderRadius: 600, marginBottom: "2rem" }}
+              />
+            </Box>
+            <Box>
+              <Heading fontSize={5}>Hi, I'm Derek.</Heading>
+              <Text py={2} fontSize={4}>
+                I create interfaces, applications, and art on the web
+              </Text>
+              <Text py={2} fontSize={2} lineHeight={1.2}>
+                For over a decade my work has contributed to the success of
+                companies of varing size; everything from seed startups to
+                fortune 50 companies.
+              </Text>
+              <Text py={2} fontSize={2} lineHeight={1.2}>
+                When i'm not working you can find me creating digital art,
+                hiking, traveling, and spending time with my family
+              </Text>
 
-      <Content width={[1, 1, 1 / 2]} ml={[0, "50vw"]}>
-        {/* <SocialLinks /> */}
-
-        <Heading fontSize={5}>Hi, I'm Derek.</Heading>
-
-        <Text py={2} fontSize={4}>
-          I create interfaces, applications, and art on the web.
-        </Text>
-
-        <Divider />
-
-        <Text py={2} fontSize={3}>
-          I like open source, art, traveling, education, diversity, pacifism,
-          and organic avocados.
-        </Text>
-
-        <Text py={3} fontSize={3}>
-          Sometimes I teach creative coding, give tech talks, and volunteer at
-          art & tech events.
-        </Text>
-
-        {/* <Divider /> */}
-
-        <Section bg="#fff">
-          <Text fontWeight={200} mb={2} fontSize={4}>
-            Current:
-          </Text>
-          <Text color="#A36D90" fontSize={4}>
-            Sr Engineer @ Target.com
-          </Text>
+              <Divider />
+              <Text fontWeight={200} mb={2} fontSize={4}>
+                Current:
+              </Text>
+              <Text color={theme.primary} fontSize={4} mb={5}>
+                Media Upstream
+              </Text>
+            </Box>
+          </Flex>
         </Section>
 
-        <Section bg="#e7e8ea">
+        <Section bg={theme.secondary}>
           <Text fontWeight={200} fontSize={4} mb={2}>
             Previous:
           </Text>
           <Flex flexWrap="wrap">
             {[
+              "Drinkworks",
+              "Target",
               "Frontend Masters",
               "Invisible Friend",
               "Jingit",
-              "Voice Hive",
-              "Creed"
+              "Voice Hive"
             ].map(item => (
               <Box
                 key={item}
@@ -192,7 +222,7 @@ const Homepage = () => {
           </Flex>
         </Section>
 
-        <Section bg="#A36D90">
+        <Section bg={theme.primary}>
           <Text
             fontWeight={200}
             fontSize={4}
@@ -211,34 +241,6 @@ const Homepage = () => {
                   style={{ display: "block" }}
                 >
                   {item.name}
-                </Link>
-              </Box>
-            ))}
-          </Flex>
-        </Section>
-
-        <Section style={{ display: "none" }}>
-          <Text
-            fontWeight={200}
-            fontSize={3}
-            mb={3}
-            color="#fff"
-            children="Change Visualization:"
-          />
-          <Flex flexWrap="wrap">
-            {sketchList.map((item, i) => (
-              <Box key={item} width={[1 / 2, 1 / 3]}>
-                <Link
-                  py={2}
-                  color="#fff"
-                  style={{
-                    cursor: "pointer",
-                    display: "block"
-                  }}
-                  onClick={() => setSketch(i)}
-                >
-                  {selectedSketch === i ? "◙  " : ""}
-                  {item}
                 </Link>
               </Box>
             ))}
