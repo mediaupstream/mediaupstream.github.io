@@ -11,7 +11,7 @@ const randomSketch = sketch => Math.floor(Math.random() * sketch.length) || 0;
 const sketchList = ["expand", "bubbles", "lines"];
 
 const theme = {
-  primary: "#c04b6a",
+  primary: "#1f769d",
   secondary: "#e7e8ea",
   text: "#76818E",
   bg: "#fff"
@@ -57,10 +57,10 @@ const projects = [
     name: "Cube Draw",
     url: "/sandbox/cube-draw/"
   },
-  {
-    name: "Paint Spread",
-    url: "/sandbox/paint-spread"
-  },
+  // {
+  //   name: "Paint Spread",
+  //   url: "/sandbox/paint-spread"
+  // },
   {
     name: "Tic Tac Toe",
     url: "/ttt-react-animated"
@@ -97,12 +97,12 @@ const Divider = styled(Box).attrs({
   box-sizing: border-box;
   margin-top: 16px;
   margin-bottom: 16px;
-  border-top: 8px dotted rgb(197, 169, 191);
+  border-top: 8px dotted #1f769d;
   height: 2px;
-  opacity: 0.3;
+  opacity: 0.1;
 `;
 
-const Link = styled(p => <L color="#CF4D6F" {...p} />)`
+const Link = styled(p => <L color="#1f769d" {...p} />)`
   border: none;
   text-decoration: none;
   transition: transform 0.2s ease-in-out;
@@ -122,7 +122,7 @@ const Content = styled(Box)`
   z-index: 100;
 
   position: relative;
-  background: #cf4d6f;
+  background: #1f769d;
   padding-bottom: 0;
   box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.4);
 
@@ -205,7 +205,9 @@ const Homepage = () => {
                 Current:
               </Text>
               <Text color={theme.primary} fontSize={4} mb={2}>
-                Media Upstream
+                <Link href="https://www.axiom.co/" target="_blank">
+                  Axiom
+                </Link>
               </Text>
             </Box>
           </Flex>
