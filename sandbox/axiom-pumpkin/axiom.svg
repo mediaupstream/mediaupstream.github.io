@@ -8,9 +8,9 @@ path {
   animation: pulse 2s infinite linear;
 }
 @keyframes pulse {
-  0% { transform: scale(.4); }
-  50% { transform: scale(1); }
-  100% { transform: scale(.4); }
+  0% { transform: scale(.4); filter: hue-rotate(120deg) blur(100px); }
+  50% { transform: scale(1); filter: hue-rotate(240deg) blur(0);}
+  100% { transform: scale(.4); filter: hue-rotate(360deg) blur(100px);}
 }
     </style>
     <linearGradient id="gradient">

@@ -15,6 +15,8 @@ body {
   background-image: url("./axiom.svg");
   background-size: 5%;
   background-position: 50%;
+  /* backdrop-filter: blur(5px); */
+  /* animation: blur 2s infinite linear; */
 }
 
 canvas {
@@ -23,4 +25,10 @@ canvas {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+@keyframes blur {
+  0% { filter: invert(0) }
+  50% { filter: invert(1) }
+  100% { filter: invert(0) }
 }
