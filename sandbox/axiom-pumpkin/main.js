@@ -1,8 +1,9 @@
 const W = 800;
 const H = 800;
 const WEIGHT = 20;
-
+const START_DELAY = 120;
 let FONT;
+let SPEED = 250;
 
 function preload() {
   FONT = loadFont("Consolas.ttf");
@@ -18,7 +19,10 @@ function setup() {
 
 function draw() {
   orbitControl();
-  rotateY(frameCount / 300);
+  
+  if (frameCount >= START_DELAY) {
+    rotateY((frameCount - START_DELAY) / SPEED);
+  }
   background("white");
   push();
   translate(-150, 0, 0);
@@ -35,9 +39,10 @@ function drawPumpkin() {
   drawPart(-140, 0, w, h);
 
   push();
-  translate(0, 0, 10);
+  translate(0, 0, 0);
+  rotateY(radians(90));
   stroke(color(0, 255, 0));
-  rect(-15, -225, 30, 80);
+  rect(-25, -225, 50, 80);
   pop();
 
   drawLogs();
@@ -45,7 +50,7 @@ function drawPumpkin() {
 
 function drawLogs() {
   push();
-  translate(20, -20, 20);
+  translate(20, -20, 40);
   textSize(100);
   fill("black");
   text(
@@ -57,18 +62,28 @@ function drawLogs() {
   pop();
 
   push();
-  fill("white");
-  noStroke();
-  translate(-150, -80, -20);
-  rect(0, 0, 290, 80);
-  pop();
+  translate(20, -20, 39.5);
+  textSize(100);
+  fill('white');
+  text("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", -150, 15);
+  text("OOOGS", -150, 115);
+  pop()
+
 
   push();
   rotateY(radians(180));
   translate(20, -125, 40);
   textSize(100);
-  fill(color(255, 204, 0));
-  text("AXIOM", -150, 115);
+  fill('black');
+  text("AXIOM", -150, 125);
+  pop();
+
+  push();
+  rotateY(radians(180));
+  translate(20, -125, 39.5);
+  textSize(100);
+  fill('white');
+  text("AXIOM", -150, 125);
   pop();
 }
 
