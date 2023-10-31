@@ -1,9 +1,9 @@
 const W = 800;
 const H = 800;
 const WEIGHT = 20;
-const START_DELAY = 120;
+const START_DELAY = 100;
 let FONT;
-let SPEED = 250;
+let SPEED = 200;
 
 function preload() {
   FONT = loadFont("Consolas.ttf");
